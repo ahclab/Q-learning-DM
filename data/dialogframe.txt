@@ -1,68 +1,78 @@
 {
-	"frame":"play_music",
-	"state":[
+	"play_music":[
 		{
 			"state-index":0,
 			"goal-possible":0,
-			"slot-value":[
+			"slot-value":{
 				"artist":"NULL",
-				"album":"NULL"
-				]
-		}
-	],
-	"state":[
+				"album":"NULL"				
+				},
+			"actions":{
+				"do":"please give me the artist name or album name.",
+				"confirm":"do you want to play some music?"
+				}
+		},
 		{
 			"state-index":1,
 			"goal-possible":1,
-			"slot-value":[
+			"slot-value":{
 				"artist":"ARTIST",
-				"album":"NULL"
-				]
-		}
-	],
-	"state":[
+				"album":"NULL"			
+				},
+			"actions":{
+				"goal":"OK, I play the ARTIST music",
+				"do":"please give me the album name.",
+				"confirm":"do you want to play music of ARTIST?"
+				}
+		},
 		{
 			"state-index":2,
 			"goal-possible":1,
-			"slot-value":[
+			"slot-value":{
 				"artist":"NULL",
 				"album":"ALBUM"
-				]
-		}
-	],
-	"state":[
+				},
+			"actions":{
+				"goal":"OK, I play the ALBUM music",
+				"do":"please give me the ALBUM name.",
+				"confirm":"do you want to play music of ALBUM?"
+				}
+		},
 		{
 			"state-index":3,
 			"goal-possible":1,
-			"slot-value":[
+			"slot-value":{
 				"artist":"ARTIST",
 				"album":"ALBUM"
-				]
+				},
+			"actions":{
+				"goal":"OK, I play the music of ALBUM by ARTIST",
+				"confirm":"do you want to play music of ALBUM by ARTIST?"
+				}
 		}
 	],
-	"state":[
-		{
-			"state-index":4,
-			
-}	
-{
-	"frame":"volume_control",
-	"state":[
+	"volume_control":[
 		{
 			"state-index":4,
 			"goal-possible":0,
-			"slot-value":[
+			"slot-value":{
 				"volume":"NULL"
-				]
-		}
-	],
-	"state":[
+				},
+			"actions":{
+				"do":"could you give me the changing amount of volume",
+				"confirm":"do you want to change the volume?"
+				}
+		},
 		{
 			"state-index":5,
 			"goal-possible":1,
-			"slot-value"[
+			"slot-value":{
 				"volume":"AMOUNT"
-				]
+				},
+			"actions":{
+				"goal":"OK, I change the volume AMOUNT",
+				"confirm":"do you want to change the volume AMOUNT?"
+				}
 		}
 	]
 }
