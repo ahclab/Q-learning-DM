@@ -86,12 +86,10 @@ def noise_sampling(state,confidence):
     prob[pos] = confidence
     return(states_nda,prob)
 
-def state_obs(cstate,confidence):
-    cpos = state_pos[cstate]
-    observation_matrix = np.zeros((len(states),len(states)))
-    observation_matrix[cpos] = noise_sampling(state,confidence)[1]
-    return observation_matrix.T
-    
+def noisy_state(prob):
+    noisystate = np.random.choice(states_nda,p=prob)
+    return noisystate
+
 goal_matrix = np.zeros((len(states),len(states)))
 for state in states:
     spos    = state_pos[state]

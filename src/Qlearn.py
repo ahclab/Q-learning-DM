@@ -36,7 +36,7 @@ def best_action(state,conf):
     
 
 # learning rate, randomness, discount factor
-alpha   = 0.005
+alpha   = 0.01
 epsilon = 0.001
 gamma   = 0.5
 
@@ -55,13 +55,15 @@ for dial in range(100000):
     state = simulator.state_sampling(goal,-1)
     conf  = random.random()
     obs   = simulator.noise_sampling(state,conf)
-    blf   = obs
+    noisystate = simulator.noisy_state(obs[1])
+    noisyobs = simulator.noise_sampling(noisystate,conf)
+    blf   = noisyobs
     maxblf = np.max(blf[1])
-    obsstate = blf[0][np.where(maxblf==blf[1])[0][0]]
+    maxblfstate = states_nda[np.where(blf[1]==maxblf)[0][0]]
     
     erand = random.random()
     if epsilon < erand:
-        action = best_action(state,maxblf)
+        action = best_action(maxblfstate,maxblf)
     else:
         action = random.choice(actions)
         
@@ -71,36 +73,39 @@ for dial in range(100000):
     if goal == state and action == "do":
         reward += -5
     if goal != state and action == "goal":
-        reward += -20
+        reward += -50
     if goal != state and action == "do":
         reward += 1
         
     cpos = np.where(confs_nda == round(maxblf*5)/5)[0][0]
     apos = np.where(actions_nda == action)[0][0]
-    spos = np.where(states_nda == obsstate)[0][0]
+    spos = np.where(states_nda == maxblfstate)[0][0]
 
     while True:        
 
+#        print(goal,state,conf)
+        
         if action == "confirm":
             nstate = state
-            if conf + 0.3 < 1.0:
-                nconf = conf +0.3
-            else:
-                nconf = 1.0
+            noise = 1-conf
+            nconf = 1-(noise/2)
         else:
             nstate = simulator.state_sampling(goal,state)
-            nconf = conf
-
+            nconf = random.random()
+            
         nobs   = simulator.noise_sampling(nstate,nconf)
-        nblf   = simulator.beliefupdate(nobs,blf)
+
+        nnoisystate = simulator.noisy_state(nobs[1])
+        nnoisyobs = simulator.noise_sampling(nnoisystate,nconf)
+        nblf   = simulator.beliefupdate(nnoisyobs,blf)
         nmaxblf = np.max(nblf[1])
-        nobsstate = nblf[0][np.where(nmaxblf==nblf[1])[0][0]]
-        nbestaction = best_action(state,maxblf)
-        
+        nmaxblfstate = states_nda[np.where(nblf[1]==nmaxblf)[0][0]]
+        nbestaction = best_action(nmaxblfstate,nmaxblf)
+                
         ncpos = np.where(confs_nda == round(nmaxblf*5)/5)[0][0]
         #ncpos = np.where(confs_nda == round(nmaxblf))[0][0]
         napos = np.where(actions_nda == nbestaction)[0][0]
-        nspos = np.where(states_nda == nobsstate)[0][0]
+        nspos = np.where(states_nda == nmaxblfstate)[0][0]
         
         if action == "goal":
             qval[cpos][spos][apos] = (1-alpha) * qval[cpos][spos][apos] + alpha * reward
@@ -116,7 +121,7 @@ for dial in range(100000):
         
         erand = random.random()
         if epsilon < erand:
-            naction = best_action(nstate,nmaxblf)
+            naction = best_action(nmaxblfstate,nmaxblf)
         else:
             naction = random.choice(actions)
 
@@ -126,18 +131,18 @@ for dial in range(100000):
         if goal == nstate and naction == "do":
             reward += -5
         if goal != nstate and naction == "goal":
-            reward += -20
+            reward += -50
         if goal != nstate and naction == "do":
             reward += 1
         if turns == 5:
-            reward += -20
+            reward += -50
 
+        conf  = nconf
         state = nstate
         obs   = nobs
         blf   = nblf
         maxblf = nmaxblf
         action = naction
-        obsstate = nobsstate
         
         cpos = ncpos
         apos = napos
