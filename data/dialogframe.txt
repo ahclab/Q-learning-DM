@@ -10,7 +10,9 @@
 			"actions":{
 				"do":"please give me the artist name or album name.",
 				"confirm":"do you want to play some music?"
-				}
+			},
+			"parents":[-1],
+			"children":[1,2,3]
 		},
 		{
 			"state-index":1,
@@ -23,7 +25,9 @@
 				"goal":"OK, I play the ARTIST music",
 				"do":"please give me the album name.",
 				"confirm":"do you want to play music of ARTIST?"
-				}
+			},
+			"parents":[-1,0],
+			"children":[3]
 		},
 		{
 			"state-index":2,
@@ -36,7 +40,9 @@
 				"goal":"OK, I play the ALBUM music",
 				"do":"please give me the ALBUM name.",
 				"confirm":"do you want to play music of ALBUM?"
-				}
+			},
+			"parents":[-1,0],
+			"children":[3]
 		},
 		{
 			"state-index":3,
@@ -48,7 +54,9 @@
 			"actions":{
 				"goal":"OK, I play the music of ALBUM by ARTIST",
 				"confirm":"do you want to play music of ALBUM by ARTIST?"
-				}
+			},
+			"parents":[-1,0,1,2],
+			"children":[]
 		}
 	],
 	"volume_control":[
@@ -61,7 +69,9 @@
 			"actions":{
 				"do":"could you give me the changing amount of volume",
 				"confirm":"do you want to change the volume?"
-				}
+			},
+			"parents":[-1],
+			"children":[5]
 		},
 		{
 			"state-index":5,
@@ -72,7 +82,9 @@
 			"actions":{
 				"goal":"OK, I change the volume AMOUNT",
 				"confirm":"do you want to change the volume AMOUNT?"
-				}
+			},
+			"parents":[-1,4],
+			"children":[]	
 		}
 	]
 }
