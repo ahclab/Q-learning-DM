@@ -131,6 +131,7 @@ def statetransition(belief,caction):
 
 def beliefupdate(observation,transition):
     nprob = observation[1] * transition[1]
+    nprob += 0.00001
     psum  = np.sum(nprob)
     nprob = nprob / psum
     return(observation[0],nprob)
