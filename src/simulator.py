@@ -2,6 +2,7 @@
 ### User simulator of dialogue manager ###
 ### Koichiro Yoshino, Jan 28, 2018     ###
 
+
 import json
 import numpy as np
 import random

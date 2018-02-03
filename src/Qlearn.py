@@ -2,6 +2,7 @@
 ### Q-learning of dialogue manager ###
 ### Koichiro Yoshino Feb 1, 2018   ###
 
+
 import numpy as np
 import random
 import simulator
