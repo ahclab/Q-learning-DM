@@ -1,4 +1,17 @@
 {
+	"root":[
+		{
+			"state-index":-1,
+			"goal-possible":0,
+			"slot-value":{"NULL":"NULL"},
+			"actions":{
+				"do":"May I help you?",
+				"confirm":"Could you say again?"
+			},
+			"parents":[],
+			"children":[0,1,2,3,4,5]
+		}
+	],
 	"play_music":[
 		{
 			"state-index":0,
@@ -6,7 +19,7 @@
 			"slot-value":{
 				"artist":"NULL",
 				"album":"NULL"				
-				},
+			},
 			"actions":{
 				"do":"please give me the artist name or album name.",
 				"confirm":"do you want to play some music?"
@@ -20,7 +33,7 @@
 			"slot-value":{
 				"artist":"ARTIST",
 				"album":"NULL"			
-				},
+			},
 			"actions":{
 				"goal":"OK, I play the ARTIST music",
 				"do":"please give me the album name.",
@@ -35,7 +48,7 @@
 			"slot-value":{
 				"artist":"NULL",
 				"album":"ALBUM"
-				},
+			},
 			"actions":{
 				"goal":"OK, I play the ALBUM music",
 				"do":"please give me the ALBUM name.",
@@ -50,7 +63,7 @@
 			"slot-value":{
 				"artist":"ARTIST",
 				"album":"ALBUM"
-				},
+			},
 			"actions":{
 				"goal":"OK, I play the music of ALBUM by ARTIST",
 				"confirm":"do you want to play music of ALBUM by ARTIST?"
@@ -65,7 +78,7 @@
 			"goal-possible":0,
 			"slot-value":{
 				"volume":"NULL"
-				},
+			},
 			"actions":{
 				"do":"could you give me the changing amount of volume",
 				"confirm":"do you want to change the volume?"
@@ -78,7 +91,7 @@
 			"goal-possible":1,
 			"slot-value":{
 				"volume":"AMOUNT"
-				},
+			},
 			"actions":{
 				"goal":"OK, I change the volume AMOUNT",
 				"confirm":"do you want to change the volume AMOUNT?"
