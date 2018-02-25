@@ -31,7 +31,7 @@ for task in tasks:
         actions = taskstate['actions']
         parents = taskstate['parents']
         children= taskstate['children']
-
+        
         states.append(state)
         slotvals.append(slotval)
         if goalp == 1:
