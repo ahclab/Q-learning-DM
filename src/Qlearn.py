@@ -69,12 +69,10 @@ for dial in range(100000):
     reward = -1
     if goal == state and action == "goal":
         reward += 50
-    if goal == state and action == "do":
-        reward += -5
     if goal != state and action == "goal":
-        reward += -50
-    if goal != state and action == "do":
-        reward += 5
+        reward += -100
+#    if goal != state and action == "do":
+#        reward += 5
         
     cpos = np.where(confs_nda == round(maxblf*5)/5)[0][0]
     apos = np.where(actions_nda == action)[0][0]
@@ -129,12 +127,12 @@ for dial in range(100000):
         reward = -1
         if goal == nstate and naction == "goal":
             reward += 50
-        if goal == nstate and naction == "do":
-            reward += -5
+#        if goal == nstate and naction == "do":
+#            reward += -5
         if goal != nstate and naction == "goal":
-            reward += -50
-        if goal != nstate and naction == "do":
-            reward += 5
+            reward += -100
+#        if goal != nstate and naction == "do":
+#            reward += 5
         if turns == 5:
             reward += -50
 
@@ -153,10 +151,12 @@ for dial in range(100000):
 print(qval)
 for conf in confs:
     for state in states:
+#        for action in actions:
         action = best_action(state,conf)
-
+        
         cpos = np.where(confs_nda == conf)[0][0]
         apos = np.where(actions_nda == action)[0][0]
         spos = np.where(states_nda == state)[0][0]
-
-        print(conf,state,best_action(state,conf),qval[cpos][spos][apos])
+            
+            #print(conf,state,best_action(state,conf),qval[cpos][spos][apos])
+        print(conf,state,action,qval[cpos][spos][apos])
