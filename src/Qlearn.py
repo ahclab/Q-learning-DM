@@ -11,7 +11,7 @@ states = simulator.states
 state_actions = simulator.state_actions
 stateaction_sysuttr = {}
 actions = []
-confs   = [0.0,0.2,0.4,0.6,0.8,1.0]
+confs   = [0.2,0.4,0.6,0.8,1.0]
 #confs = [0.0,1.0]
 
 for state in states:
@@ -27,9 +27,7 @@ qval = np.zeros((len(confs),len(states),len(actions)))
 
 def best_action(state,conf):
     conf = round(conf*5)/5
-    #conf = round(conf)
     cpos = np.where(confs_nda == round(maxblf*5)/5)[0][0]
-    #cpos = np.where(confs_nda == round(maxblf))[0][0]
     spos = np.where(states_nda == state)[0][0]
     apos = np.where(qval[cpos][spos] == max(qval[cpos][spos]))[0][0]
     action = actions[apos]
@@ -70,13 +68,13 @@ for dial in range(100000):
         
     reward = -1
     if goal == state and action == "goal":
-        reward += 10
+        reward += 50
     if goal == state and action == "do":
         reward += -5
     if goal != state and action == "goal":
         reward += -50
     if goal != state and action == "do":
-        reward += 1
+        reward += 5
         
     cpos = np.where(confs_nda == round(maxblf*5)/5)[0][0]
     apos = np.where(actions_nda == action)[0][0]
@@ -88,8 +86,10 @@ for dial in range(100000):
         
         if action == "confirm":
             nstate = state
-            noise = 1-conf
-            nconf = 1-(noise/2)
+            #noise = 1-conf
+            #nconf = 1-(noise/2)
+            noise = 0.0
+            nconf = 1.0
         else:
             nstate = simulator.state_sampling(goal,state)
             nconf = random.random()
@@ -128,13 +128,13 @@ for dial in range(100000):
 
         reward = -1
         if goal == nstate and naction == "goal":
-            reward += 10
+            reward += 50
         if goal == nstate and naction == "do":
             reward += -5
         if goal != nstate and naction == "goal":
             reward += -50
         if goal != nstate and naction == "do":
-            reward += 1
+            reward += 5
         if turns == 5:
             reward += -50
 
@@ -153,4 +153,10 @@ for dial in range(100000):
 print(qval)
 for conf in confs:
     for state in states:
-        print(conf,state,best_action(state,conf))
+        action = best_action(state,conf)
+
+        cpos = np.where(confs_nda == conf)[0][0]
+        apos = np.where(actions_nda == action)[0][0]
+        spos = np.where(states_nda == state)[0][0]
+
+        print(conf,state,best_action(state,conf),qval[cpos][spos][apos])
